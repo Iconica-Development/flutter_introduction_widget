@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_introduction_widget/src/models/introduction_page.dart';
+import 'package:flutter_introduction_widget/src/widgets/indicator.dart';
 
 enum IndicatorMode { dot, dash, custom }
 
@@ -9,7 +10,7 @@ class IntroductionWidget extends StatefulWidget {
     required this.onComplete,
     this.skippable = true,
     this.slideEnabled = true,
-    this.indicatorMode = IndicatorMode.dot,
+    this.indicatorMode = IndicatorMode.dash,
     this.onSkip,
     this.onNext,
     this.onPrevious,
@@ -44,19 +45,77 @@ class IntroductionWidget extends StatefulWidget {
 
 class _IntroductionWidgetState extends State<IntroductionWidget> {
   late final PageController _pageController;
+  final ValueNotifier<int> _currentPage = ValueNotifier(0);
 
   @override
   void initState() {
     super.initState();
     _pageController = widget.controller ?? PageController();
+    _pageController.addListener(_handleScroll);
+  }
+
+  @override
+  void dispose() {
+    _pageController.removeListener(_handleScroll);
+    if (widget.controller == null) {
+      _pageController.dispose();
+    }
+    super.dispose();
+  }
+
+  void _handleScroll() {
+    if (mounted) {
+      _currentPage.value = _pageController.page?.round() ?? 0;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    return PageView(
-      physics: widget.physics,
-      controller: _pageController,
-      children: List.generate(widget.pages.length, _buildPage),
+    return Stack(
+      children: [
+        PageView(
+          physics: widget.physics,
+          controller: _pageController,
+          children: List.generate(widget.pages.length, _buildPage),
+        ),
+        SafeArea(
+          child: Column(
+            children: [
+              Text('Skip'),
+              const Spacer(),
+              AnimatedBuilder(
+                animation: _currentPage,
+                builder: (context, _) => Indicator(
+                  mode: widget.indicatorMode,
+                  controller: _pageController,
+                  count: widget.pages.length,
+                  index: _currentPage.value,
+                ),
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(32),
+              //   child: AnimatedBuilder(
+              //     animation: _pageController,
+              //     builder: (context, _) => IntroductionButtons(
+              //       controller: _controller,
+              //       next: _currentPage.value < pages.length - 1,
+              //       previous: _currentPage.value > 0,
+              //       last: _currentPage.value == pages.length - 1,
+              //       options: widget.options,
+              //       onFinish: widget.onComplete,
+              //       onNext: () {
+              //         widget.onNext?.call(pages[_currentPage.value]);
+              //       },
+              //       onPrevious: () {
+              //         widget.onNext?.call(pages[_currentPage.value]);
+              //       },
+              //     ),
+              //   ),
+              // ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

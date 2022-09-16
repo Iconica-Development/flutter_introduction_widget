@@ -1,88 +1,43 @@
-// ignore_for_file: constant_identifier_names, prefer_mixin
+// ignore_for_file: prefer_mixin
 
-library introductionpages;
-
-import 'dart:math' show max;
-import 'package:decorated_icon/decorated_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_introduction_widget/src/extensions.dart';
-import 'introduction_page.dart';
-
-extension AlignmentFromTextAlign on TextAlign {
-  CrossAxisAlignment toCrossAxisAlignment() {
-    switch (this) {
-      case TextAlign.left:
-        return CrossAxisAlignment.start;
-      case TextAlign.right:
-        return CrossAxisAlignment.end;
-      case TextAlign.center:
-        return CrossAxisAlignment.center;
-      // ignore: no_default_cases
-      default:
-        return CrossAxisAlignment.end;
-    }
-  }
-}
+import 'package:flutter_introduction_widget/src/models/defaults.dart';
+import 'package:flutter_introduction_widget/src/widgets/dash_indicator.dart';
+import 'package:flutter_introduction_widget/src/widgets/dots_indicator.dart';
+import 'package:flutter_introduction_widget/src/widgets/shadow_icon.dart';
+import 'models/introduction_page.dart';
 
 class Introduction extends StatefulWidget {
-  Introduction({
-    key,
+  const Introduction({
     this.child,
     this.onComplete,
     this.pages,
-    IntroductionSettings? introductionSettings,
-    // ignore: prefer_asserts_with_message
-  })  : assert(!(child == null && onComplete == null)),
-        super(key: key) {
-    this.introductionSettings = introductionSettings ?? IntroductionSettings();
-  }
+    this.introductionSettings = const IntroductionSettings(),
+    super.key,
+  }) : assert(
+          !(child == null && onComplete == null),
+          'Either child or onComplete must be provided',
+        );
   final Widget? child;
   final List<IntroductionPage>? pages;
   final VoidCallback? onComplete;
-  late final IntroductionSettings introductionSettings;
+  final IntroductionSettings introductionSettings;
 
   @override
-  // ignore: library_private_types_in_public_api
-  _IntroductionState createState() => _IntroductionState();
+  State<Introduction> createState() => _IntroductionState();
 }
 
 class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
-  static final _defaultPages = [
-    IntroductionPage(
-      title: 'Welkom bij de appshell',
-      text: 'De appshell is door iconica gebouwd ter ondersteuning '
-          ' van vlotte development van apps!',
-      image: 'assets/images/shell.png;appshell',
-      icon: Icons.access_time,
-      backgroundImage: null,
-    ),
-    IntroductionPage(
-      title: 'Volledig aanpasbaar',
-      text: 'Door het grote aantal aan opties en optimaal gebruik '
-          'van het flutter thema kan de appshell met weinig moeite '
-          'op verschillende maatwerk situaties worden toegepast',
-      icon: Icons.access_alarm,
-      image: 'assets/images/versitile.png;appshell',
-      backgroundImage: null,
-    ),
-    IntroductionPage(
-      title: 'Configureren!',
-      text: 'Dit zijn de standaard introductieschermen van de appshell.'
-          ' Geef zelf introductieschermen mee voor optimale aanpassing'
-          ' aan je maatwerk app!',
-      icon: Icons.account_circle,
-      image: 'assets/images/config.png;appshell',
-      backgroundImage: null,
-    ),
-  ];
-
   List<IntroductionPage> pages = [];
   int _currentpage = 0;
   final PageController _controller = PageController();
   late TextAlign textAlign;
+  IntroductionSettings introductionSettings = const IntroductionSettings();
 
   @override
   void initState() {
+    introductionSettings = widget.introductionSettings;
     _controller.addListener(
       () {
         setState(
@@ -101,21 +56,26 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
         } else if (confPages != null && confPages.isNotEmpty) {
           pages = confPages;
         } else {
-          pages = _defaultPages;
+          pages = getDefaultPages();
         }
-        widget.introductionSettings.buttonMode =
-            widget.introductionSettings.buttonMode;
-        widget.introductionSettings.showSkipButton =
-            widget.introductionSettings.showSkipButton;
-        widget.introductionSettings.showFinishButton =
-            widget.introductionSettings.showFinishButton ?? true;
-        widget.introductionSettings.layoutStyle =
-            widget.introductionSettings.layoutStyle;
         textAlign = [].contains(widget.introductionSettings.layoutStyle)
             ? TextAlign.center
             : TextAlign.left;
+
+        introductionSettings = widget.introductionSettings.copyWith(
+          buttonMode: widget.introductionSettings.buttonMode,
+          showSkipButton: widget.introductionSettings.showSkipButton,
+          showFinishButton: widget.introductionSettings.showFinishButton,
+          layoutStyle: widget.introductionSettings.layoutStyle,
+        );
       });
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   Future<void> _onComplete() async {
@@ -123,7 +83,7 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
   }
 
   void _handleTapUp(TapUpDetails details) {
-    if (widget.introductionSettings.introductionTapEnabled ?? false) {
+    if (introductionSettings.introductionTapEnabled ?? false) {
       if (details.globalPosition.dx / MediaQuery.of(context).size.width > 0.5) {
         if (_controller.page!.toInt() < pages.length - 1) {
           _controller.animateToPage(
@@ -184,11 +144,11 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
                 .toList(),
           ),
           if (_currentpage != pages.length - 1 &&
-              widget.introductionSettings.showSkipButton) ...[
+              introductionSettings.showSkipButton) ...[
             _buildSkipButton(context)
           ],
           _buildPageIndicator(context),
-          if (widget.introductionSettings.buttonMode! ==
+          if (introductionSettings.buttonMode! ==
               IntroductionScreenButtonMode.Text) ...[
             if (_currentpage == 0) ...[
               Align(alignment: Alignment.bottomLeft, child: Container())
@@ -196,12 +156,12 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
               _buildPreviousPageButton(context)
             ],
             if (_currentpage == pages.length - 1 &&
-                widget.introductionSettings.showFinishButton!) ...[
+                introductionSettings.showFinishButton!) ...[
               _buildStartAppButton(context),
             ] else ...[
               _buildNextPageButton(context),
             ],
-          ] else if (widget.introductionSettings.buttonMode! ==
+          ] else if (introductionSettings.buttonMode! ==
               IntroductionScreenButtonMode.Icon) ...[
             _buildPageIconButtons(context),
           ],
@@ -228,11 +188,10 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
               ),
             ],
             Column(
-              crossAxisAlignment: widget
-                  .introductionSettings.introductionTextAlign
+              crossAxisAlignment: introductionSettings.introductionTextAlign
                   .toCrossAxisAlignment(),
               children: <Widget>[
-                if (widget.introductionSettings.layoutStyle ==
+                if (introductionSettings.layoutStyle ==
                     IntroductionLayoutStyle.ImageTop) ...[
                   Expanded(
                     child: Center(
@@ -250,7 +209,7 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
                   ),
                   child: _buildTitle(context, page),
                 ),
-                if (widget.introductionSettings.layoutStyle ==
+                if (introductionSettings.layoutStyle ==
                     IntroductionLayoutStyle.ImageCenter) ...[
                   Expanded(
                     child: Center(
@@ -268,7 +227,7 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
                   ),
                   child: _buildIntroductionDescription(context, page),
                 ),
-                if (widget.introductionSettings.layoutStyle ==
+                if (introductionSettings.layoutStyle ==
                     IntroductionLayoutStyle.ImageBottom) ...[
                   Expanded(
                     child: Container(
@@ -451,8 +410,7 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
   Widget _buildPageIndicator(BuildContext context) {
     late Widget indicator;
 
-    if (widget.introductionSettings.introductionIndicatorMode ==
-        IndicatorMode.Dot) {
+    if (introductionSettings.introductionIndicatorMode == IndicatorMode.Dot) {
       indicator = DotsIndicator(
         color: Theme.of(context).backgroundColor,
         dotcolor: Theme.of(context).primaryColor,
@@ -490,7 +448,7 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
           child: Text(
             page.text ?? '',
             style: Theme.of(context).textTheme.bodyText1,
-            textAlign: widget.introductionSettings.introductionTextAlign,
+            textAlign: introductionSettings.introductionTextAlign,
           ),
         ),
       ),
@@ -508,7 +466,7 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
             child: Text(
               page.title ?? '',
               style: Theme.of(context).textTheme.headline3,
-              textAlign: widget.introductionSettings.introductionTextAlign,
+              textAlign: introductionSettings.introductionTextAlign,
             ),
           ),
         ),
@@ -526,159 +484,6 @@ class _IntroductionState extends State<Introduction> with NavigateWidgetMixin {
           child: Text('Skip', style: Theme.of(context).textTheme.subtitle1),
         ),
       ),
-    );
-  }
-}
-
-class DashIndicator extends AnimatedWidget {
-  const DashIndicator({
-    required this.controller,
-    required this.selectedColor,
-    required this.itemCount,
-    required this.onPageSelected,
-    this.color = Colors.white,
-    super.key,
-  }) : super(listenable: controller);
-  final PageController controller;
-  final Color color;
-  final Color selectedColor;
-  final int itemCount;
-  final Function(int) onPageSelected;
-
-  @override
-  Widget build(BuildContext context) {
-    var index = (controller.page ?? controller.initialPage).round();
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        for (int i = 0; i < itemCount; i++) ...[
-          _buildDash(index: i, selected: index == i),
-        ],
-      ],
-    );
-  }
-
-  Widget _buildDash({required int index, required bool selected}) {
-    return SizedBox(
-      width: 20,
-      child: Center(
-        child: Material(
-          color: selected ? color : color.withAlpha(125),
-          type: MaterialType.card,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2.5),
-            ),
-            width: 16,
-            height: 5,
-            child: InkWell(
-              onTap: () => onPageSelected.call(index),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-/// An indicator showing the currently selected page of a PageController
-class DotsIndicator extends AnimatedWidget {
-  const DotsIndicator({
-    required this.controller,
-    this.color = Colors.white,
-    this.dotcolor,
-    this.itemCount,
-    this.onPageSelected,
-    super.key,
-  }) : super(listenable: controller);
-
-  /// The PageController that this DotsIndicator is representing.
-  final Color? dotcolor;
-  final PageController controller;
-
-  /// The number of items managed by the PageController
-  final int? itemCount;
-
-  /// Called when a dot is tapped
-  final ValueChanged<int>? onPageSelected;
-
-  /// The color of the dots.
-  ///
-  /// Defaults to `Colors.white`.
-  final Color color;
-
-  // The base size of the dots
-  static const double _kDotSize = 4.0;
-
-  // The increase in the size of the selected dot
-  static const double _kMaxZoom = 2.0;
-
-  // The distance between the center of each dot
-  static const double _kDotSpacing = 12.0;
-
-  Widget _buildDot(int index) {
-    var selectedness = Curves.easeOut.transform(
-      max(
-        0.0,
-        1.0 -
-            ((controller.page ?? controller.initialPage).round() - index).abs(),
-      ),
-    );
-    var zoom = 1.0 + (_kMaxZoom - 1.0) * selectedness;
-
-    return SizedBox(
-      width: _kDotSpacing,
-      child: Center(
-        child: Material(
-          color: ((controller.page ?? controller.initialPage).round()) == index
-              ? color
-              : color.withAlpha(125),
-          type: MaterialType.circle,
-          child: Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              border: Border.all(width: 2, color: dotcolor!),
-            ),
-            width: _kDotSize * 2 * zoom,
-            height: _kDotSize * 2 * zoom,
-            child: InkWell(
-              onTap: () => onPageSelected!.call(index),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: List<Widget>.generate(itemCount!, _buildDot),
-    );
-  }
-}
-
-// wrapper class to enable old API from shadow
-// Icon with new DecoratedIcon package
-class ShadowIcon extends StatelessWidget {
-  const ShadowIcon({
-    required this.icon,
-    required this.shadow,
-    super.key,
-  });
-  final Icon icon;
-  final Color shadow;
-
-  @override
-  Widget build(BuildContext context) {
-    return DecoratedIcon(
-      icon.icon!,
-      color: icon.color,
-      size: icon.size,
-      semanticLabel: icon.semanticLabel,
-      textDirection: icon.textDirection,
-      shadows: [BoxShadow(color: shadow, blurRadius: 5)],
     );
   }
 }

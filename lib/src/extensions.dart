@@ -50,3 +50,19 @@ abstract class StatefulNavigateWidget extends StatefulWidget
     with NavigateWidgetMixin {
   const StatefulNavigateWidget({super.key});
 }
+
+extension AlignmentFromTextAlign on TextAlign {
+  CrossAxisAlignment toCrossAxisAlignment() {
+    switch (this) {
+      case TextAlign.left:
+        return CrossAxisAlignment.start;
+      case TextAlign.right:
+        return CrossAxisAlignment.end;
+      case TextAlign.center:
+        return CrossAxisAlignment.center;
+      // ignore: no_default_cases
+      default:
+        return CrossAxisAlignment.end;
+    }
+  }
+}

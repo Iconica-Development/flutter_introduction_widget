@@ -15,7 +15,7 @@ class FlutterIntroductionDemo extends StatelessWidget {
       body: Theme(
         data: Theme.of(context).copyWith(backgroundColor: Colors.amber),
         child: Introduction(
-          introductionSettings: IntroductionSettings(
+          introductionSettings: const IntroductionSettings(
             buttonMode: IntroductionScreenButtonMode.Text,
             showSkipButton: true,
             showFinishButton: true,
@@ -26,11 +26,17 @@ class FlutterIntroductionDemo extends StatelessWidget {
             }
           },
           pages: [
-            IntroductionPage(title: 'iojij', text: 'hello'),
+            IntroductionPage(title: 'title', text: 'hello'),
             IntroductionPage(text: 'hello'),
             IntroductionPage(text: 'hello'),
           ],
-          child: Container(),
+          child: Container(
+            child: const Center(
+              child: Text(
+                'child',
+              ),
+            ),
+          ),
         ),
       ),
     );

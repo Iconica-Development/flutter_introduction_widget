@@ -45,7 +45,7 @@ class IntroductionPage {
 }
 
 class IntroductionSettings {
-  IntroductionSettings({
+  const IntroductionSettings({
     this.showFinishButton,
     this.showSkipButton = true,
     this.introductionTapEnabled,
@@ -54,11 +54,34 @@ class IntroductionSettings {
     this.buttonMode,
     this.layoutStyle,
   });
-  bool? showFinishButton;
-  bool showSkipButton;
-  bool? introductionTapEnabled;
-  TextAlign introductionTextAlign;
-  IndicatorMode introductionIndicatorMode;
-  IntroductionScreenButtonMode? buttonMode;
-  IntroductionLayoutStyle? layoutStyle;
+  final bool? showFinishButton;
+  final bool showSkipButton;
+  final bool? introductionTapEnabled;
+  final TextAlign introductionTextAlign;
+  final IndicatorMode introductionIndicatorMode;
+  final IntroductionScreenButtonMode? buttonMode;
+  final IntroductionLayoutStyle? layoutStyle;
+
+  IntroductionSettings copyWith({
+    bool? showFinishButton,
+    bool? showSkipButton,
+    bool? introductionTapEnabled,
+    TextAlign? introductionTextAlign,
+    IndicatorMode? introductionIndicatorMode,
+    IntroductionScreenButtonMode? buttonMode,
+    IntroductionLayoutStyle? layoutStyle,
+  }) {
+    return IntroductionSettings(
+      showFinishButton: showFinishButton ?? this.showFinishButton,
+      showSkipButton: showSkipButton ?? this.showSkipButton,
+      introductionTapEnabled:
+          introductionTapEnabled ?? this.introductionTapEnabled,
+      introductionTextAlign:
+          introductionTextAlign ?? this.introductionTextAlign,
+      introductionIndicatorMode:
+          introductionIndicatorMode ?? this.introductionIndicatorMode,
+      buttonMode: buttonMode ?? this.buttonMode,
+      layoutStyle: layoutStyle ?? this.layoutStyle,
+    );
+  }
 }

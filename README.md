@@ -1,24 +1,40 @@
 [![pub package](https://img.shields.io/pub/v/[PACKAGE NAME ON PUB].svg)](https://github.com/Iconica-Development) [![Build status](URL TO REPO)](URL TO GITHUB ACTIONS) [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart) 
 
-Short description of what your package is, why you created it. What issues it fixes and how it works. Also mention the available platforms
+# Introduction Widget
+Flutter Introduction Widget for showing a list of introduction pages on a single scrollable page or horizontal pageview.
 
-## Setup
+If nothing is provided a few default pages are shown with a simple description of the package.
 
-What setup steps are neccesarry and why>
 
-<details>
-<summary>PLATFORM</summary>
-    
-specific platform steps
+Supports all Flutter platforms.
 
-</details>
+## Usage
+
+To use this package, add `flutter_introduction_widget` as a [dependency in your pubspec.yaml file](https://flutter.dev/docs/development/platform-integration/platform-channels).
 
 ## How to use
 
-How can we use the package descibe the most common ways with examples in 
+Simple way to use the introduction widget:
 ```dart
- codeblocks
+Introduction(
+    introductionSettings: const IntroductionSettings(
+        buttonMode: IntroductionScreenButtonMode.Text,
+        showSkipButton: true,
+        showFinishButton: true,
+    ),
+    onComplete: () {
+        debugPrint('done!');
+    },
+    pages: [
+        IntroductionPage(title: 'Page1', text: 'hello'),
+        IntroductionPage(title: 'Page2', text: 'world'),
+        IntroductionPage(title: 'Page3', text: 'text'),
+    ],
+),
 ``` 
+### Example
+
+See [Example Code](example/lib/main.dart) for more info.
 
 ## Issues
 

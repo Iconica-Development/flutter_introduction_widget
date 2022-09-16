@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_introduction_widget/flutter_introduction_widget.dart';
 
@@ -21,22 +20,13 @@ class FlutterIntroductionDemo extends StatelessWidget {
             showFinishButton: true,
           ),
           onComplete: () {
-            if (kDebugMode) {
-              print('done!');
-            }
+            debugPrint('done!');
           },
           pages: [
-            IntroductionPage(title: 'title', text: 'hello'),
-            IntroductionPage(text: 'hello'),
-            IntroductionPage(text: 'hello'),
+            IntroductionPage(title: 'Page1', text: 'hello'),
+            IntroductionPage(title: 'Page2', text: 'world'),
+            IntroductionPage(title: 'Page3', text: 'text'),
           ],
-          child: Container(
-            child: const Center(
-              child: Text(
-                'child',
-              ),
-            ),
-          ),
         ),
       ),
     );

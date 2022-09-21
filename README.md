@@ -16,23 +16,43 @@ To use this package, add `flutter_introduction_widget` as a [dependency in your 
 
 Simple way to use the introduction widget:
 ```dart
-Introduction(
-    introductionSettings: const IntroductionSettings(
-        buttonMode: IntroductionScreenButtonMode.Text,
-        showSkipButton: true,
-        showFinishButton: true,
+IntroductionScreen(
+    options: IntroductionOptions(
+        pages: [
+            IntroductionPage(
+                title: const Text('First page'),
+                text: const Text('Wow a page'),
+                graphic: const FlutterLogo(),
+            ),
+            IntroductionPage(
+                title: const Text('Second page'),
+                text: const Text('Another page'),
+                graphic: const FlutterLogo(),
+            ),
+            IntroductionPage(
+                title: const Text('Third page'),
+                text: const Text('The final page of this app'),
+                graphic: const FlutterLogo(),
+                backgroundImage: const NetworkImage(
+                    'https://iconica.nl/wp-content/uploads/2021/12/20210928-_CS17127-1-2048x1365.jpg',
+                ),
+            ),
+        ],
+        introductionTranslations: const IntroductionTranslations(
+            skipButton: 'Skip it!',
+            nextButton: 'Previous',
+            previousButton: 'Next',
+            finishButton: 'To the app!',
+        ),
+        buttonMode: IntroductionScreenButtonMode.text,
+        buttonBuilder: (context, onPressed, child) =>
+            ElevatedButton(onPressed: onPressed, child: child),
     ),
     onComplete: () {
-        debugPrint('done!');
+        debugPrint('We completed the cycle');
     },
-    pages: [
-        IntroductionPage(title: 'Page1', text: 'hello'),
-        IntroductionPage(title: 'Page2', text: 'world'),
-        IntroductionPage(title: 'Page3', text: 'text'),
-    ],
 ),
 ``` 
-### Example
 
 See [Example Code](example/lib/main.dart) for more info.
 

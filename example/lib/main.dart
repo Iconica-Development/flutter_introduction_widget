@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           buttonMode: IntroductionScreenButtonMode.text,
           indicatorMode: IndicatorMode.dash,
           skippable: true,
-          buttonBuilder: (context, onPressed, child) =>
+          buttonBuilder: (introductionButton, context, onPressed, child) =>
               ElevatedButton(onPressed: onPressed, child: child),
         ),
         onComplete: () {

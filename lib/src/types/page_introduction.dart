@@ -55,7 +55,6 @@ class _MultiPageIntroductionScreenState
   @override
   Widget build(BuildContext context) {
     var pages = widget.options.pages;
-    var translations = widget.options.introductionTranslations;
     return Stack(
       children: [
         NotificationListener<ScrollNotification>(
@@ -98,24 +97,32 @@ class _MultiPageIntroductionScreenState
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: SizedBox(
                   height: 64,
                   child: AnimatedBuilder(
                     animation: _controller,
-                    builder: (context, _) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          if (widget.options.skippable && !_isLast(pages)) ...[
-                            TextButton(
-                              onPressed: widget.onComplete,
-                              child: Text(translations.skipButton),
-                            ),
-                          ],
-                        ],
-                      );
-                    },
+                    builder: (context, _) => IntroductionButtons(
+                      controller: _controller,
+                      next: _isNext(pages),
+                      previous: _isPrevious,
+                      last: _isLast(pages),
+                      options: widget.options,
+                      onFinish: widget.onComplete,
+                      onNext: () {
+                        widget.onNext?.call(pages[_currentPage.value]);
+                      },
+                      onPrevious: () {
+                        widget.onNext?.call(pages[_currentPage.value]);
+                      },
+                      showNextButton: false,
+                      showPreviousButton: widget.options.displayMode ==
+                          IntroductionDisplayMode.multiPageHorizontal1,
+                      showFinishButton: false,
+                      showSkipButton: true,
+                      alignButtonsRight: widget.options.displayMode !=
+                          IntroductionDisplayMode.multiPageHorizontal1,
+                    ),
                   ),
                 ),
               ),
@@ -150,6 +157,10 @@ class _MultiPageIntroductionScreenState
                           onPrevious: () {
                             widget.onNext?.call(pages[_currentPage.value]);
                           },
+                          showNextButton: widget.options.displayMode !=
+                              IntroductionDisplayMode.multiPageHorizontal1,
+                          showPreviousButton: widget.options.displayMode !=
+                              IntroductionDisplayMode.multiPageHorizontal1,
                         ),
                       ),
                     ),
@@ -160,23 +171,24 @@ class _MultiPageIntroductionScreenState
           ),
         ),
         AnimatedBuilder(
-            animation: _controller,
-            builder: (context, _) {
-              return IntroductionIconButtons(
-                controller: _controller,
-                next: _isNext(pages),
-                previous: _isPrevious,
-                last: _isLast(pages),
-                options: widget.options,
-                onFinish: widget.onComplete,
-                onNext: () {
-                  widget.onNext?.call(pages[_currentPage.value]);
-                },
-                onPrevious: () {
-                  widget.onNext?.call(pages[_currentPage.value]);
-                },
-              );
-            }),
+          animation: _controller,
+          builder: (context, _) {
+            return IntroductionIconButtons(
+              controller: _controller,
+              next: _isNext(pages),
+              previous: _isPrevious,
+              last: _isLast(pages),
+              options: widget.options,
+              onFinish: widget.onComplete,
+              onNext: () {
+                widget.onNext?.call(pages[_currentPage.value]);
+              },
+              onPrevious: () {
+                widget.onNext?.call(pages[_currentPage.value]);
+              },
+            );
+          },
+        ),
       ],
     );
   }
@@ -264,9 +276,14 @@ class IntroductionButtons extends StatelessWidget {
     required this.next,
     required this.last,
     required this.previous,
-    required this.onFinish,
-    required this.onNext,
-    required this.onPrevious,
+    this.onFinish,
+    this.onNext,
+    this.onPrevious,
+    this.showPreviousButton = true,
+    this.showNextButton = true,
+    this.showFinishButton = true,
+    this.showSkipButton = false,
+    this.alignButtonsRight = false,
     Key? key,
   }) : super(key: key);
 
@@ -280,6 +297,13 @@ class IntroductionButtons extends StatelessWidget {
   final bool next;
   final bool last;
 
+  final bool showPreviousButton;
+  final bool showNextButton;
+  final bool showFinishButton;
+  final bool showSkipButton;
+
+  final bool alignButtonsRight;
+
   void _previous() {
     controller.previousPage(
       duration: kAnimationDuration,
@@ -292,11 +316,14 @@ class IntroductionButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     var translations = options.introductionTranslations;
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: alignButtonsRight
+          ? MainAxisAlignment.end
+          : MainAxisAlignment.spaceBetween,
       children: [
         if (options.buttonMode == IntroductionScreenButtonMode.text) ...[
-          if (previous) ...[
+          if (previous && showPreviousButton) ...[
             options.buttonBuilder?.call(
+                  IntroductionButton.previous,
                   context,
                   _previous,
                   Text(translations.previousButton),
@@ -307,8 +334,9 @@ class IntroductionButtons extends StatelessWidget {
                 ),
           ] else
             const SizedBox.shrink(),
-          if (next) ...[
+          if (next && showNextButton) ...[
             options.buttonBuilder?.call(
+                  IntroductionButton.next,
                   context,
                   _next,
                   Text(translations.nextButton),
@@ -317,23 +345,44 @@ class IntroductionButtons extends StatelessWidget {
                   onPressed: _next,
                   child: Text(translations.nextButton),
                 ),
-          ] else if (last) ...[
-            options.buttonBuilder?.call(
-                  context,
-                  () {
-                    onFinish?.call();
-                  },
-                  Text(translations.finishButton),
-                ) ??
-                TextButton(
-                  onPressed: () {
-                    onFinish?.call();
-                  },
-                  child: Text(translations.finishButton),
-                ),
+          ] else if (last && showFinishButton) ...[
+            Expanded(
+              flex: options.displayMode ==
+                      IntroductionDisplayMode.multiPageHorizontal1
+                  ? 1
+                  : 0,
+              child: options.buttonBuilder?.call(
+                    IntroductionButton.finish,
+                    context,
+                    () {
+                      onFinish?.call();
+                    },
+                    Text(translations.finishButton),
+                  ) ??
+                  TextButton(
+                    onPressed: () {
+                      onFinish?.call();
+                    },
+                    child: Text(translations.finishButton),
+                  ),
+            ),
           ] else ...[
             const SizedBox.shrink(),
           ],
+        ],
+        if (showSkipButton && options.skippable && !last) ...[
+          options.buttonBuilder?.call(
+                IntroductionButton.skip,
+                context,
+                () {
+                  onFinish?.call();
+                },
+                Text(translations.skipButton),
+              ) ??
+              TextButton(
+                onPressed: onFinish,
+                child: Text(translations.skipButton),
+              ),
         ],
       ],
     );

@@ -291,6 +291,8 @@ class IntroductionButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var translations = options.introductionTranslations;
+    var showFinishButton =
+        options.buttonMode == IntroductionScreenButtonMode.singleFinish;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -334,23 +336,33 @@ class IntroductionButtons extends StatelessWidget {
           ] else ...[
             const SizedBox.shrink(),
           ],
-        ] else if (options.buttonMode ==
-            IntroductionScreenButtonMode.singleFinish) ...[
-          Align(
-            child: options.buttonBuilder?.call(
-                  context,
-                  () {
-                    onFinish?.call();
-                  },
-                  Text(translations.finishButton),
-                ) ??
-                ElevatedButton(
-                  onPressed: () {
-                    onFinish?.call();
-                  },
-                  child: Text(translations.finishButton),
-                ),
-          )
+        ] else if (showFinishButton) ...[
+          const SizedBox.shrink(),
+          Expanded(
+            child: Visibility(
+              visible: last,
+              maintainSize: true,
+              maintainAnimation: true,
+              maintainState: true,
+              maintainInteractivity: false,
+              child: Align(
+                child: options.buttonBuilder?.call(
+                      context,
+                      () {
+                        onFinish?.call();
+                      },
+                      Text(translations.finishButton),
+                    ) ??
+                    ElevatedButton(
+                      onPressed: () {
+                        onFinish?.call();
+                      },
+                      child: Text(translations.finishButton),
+                    ),
+              ),
+            ),
+          ),
+          const SizedBox.shrink(),
         ],
       ],
     );

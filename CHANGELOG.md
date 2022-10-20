@@ -1,3 +1,7 @@
+## [1.1.1] - 20 October 2022
+
+* fix single button mode position and size
+
 ## [1.1.0] - 20 October 2022
 
 * add new introduction button mode single finish

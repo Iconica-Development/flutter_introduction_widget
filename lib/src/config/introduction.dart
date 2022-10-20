@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 enum IntroductionScreenMode { showNever, showAlways, showOnce }
 
-enum IntroductionScreenButtonMode { text, icon, disabled }
+enum IntroductionScreenButtonMode { text, icon, disabled, singleFinish }
 
 enum IntroductionLayoutStyle {
   imageCenter,
@@ -22,6 +22,7 @@ class IntroductionPage {
   final Widget? text;
   final Widget? graphic;
   final ImageProvider? backgroundImage;
+  final IntroductionLayoutStyle? layoutStyle;
 
   /// Creates an introduction page with data used in the introduction screen for
   /// each page.
@@ -36,6 +37,7 @@ class IntroductionPage {
     this.text,
     this.graphic,
     this.backgroundImage,
+    this.layoutStyle,
   });
 }
 

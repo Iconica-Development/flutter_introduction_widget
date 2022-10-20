@@ -7,7 +7,7 @@ class IntroductionPageContent extends StatelessWidget {
     required this.title,
     required this.text,
     required this.graphic,
-    required this.options,
+    required this.layoutStyle,
     required this.onTap,
     Key? key,
   }) : super(key: key);
@@ -15,7 +15,7 @@ class IntroductionPageContent extends StatelessWidget {
   final Widget? title;
   final Widget? text;
   final Widget? graphic;
-  final IntroductionOptions options;
+  final IntroductionLayoutStyle layoutStyle;
   final VoidCallback onTap;
 
   @override
@@ -25,15 +25,15 @@ class IntroductionPageContent extends StatelessWidget {
       child: Column(
         children: [
           if (graphic != null &&
-              options.layoutStyle == IntroductionLayoutStyle.imageTop)
+              layoutStyle == IntroductionLayoutStyle.imageTop)
             graphic!,
           if (title != null) title!,
           if (graphic != null &&
-              options.layoutStyle == IntroductionLayoutStyle.imageCenter)
+              layoutStyle == IntroductionLayoutStyle.imageCenter)
             graphic!,
           if (text != null) text!,
           if (graphic != null &&
-              options.layoutStyle == IntroductionLayoutStyle.imageBottom)
+              layoutStyle == IntroductionLayoutStyle.imageBottom)
             graphic!,
         ],
       ),

@@ -244,7 +244,7 @@ class ExplainerPage extends StatelessWidget {
                     child: page.graphic,
                   ),
                 ),
-                options: options,
+                layoutStyle: page.layoutStyle ?? options.layoutStyle,
               ),
             ),
             const SizedBox(
@@ -334,6 +334,23 @@ class IntroductionButtons extends StatelessWidget {
           ] else ...[
             const SizedBox.shrink(),
           ],
+        ] else if (options.buttonMode ==
+            IntroductionScreenButtonMode.singleFinish) ...[
+          Align(
+            child: options.buttonBuilder?.call(
+                  context,
+                  () {
+                    onFinish?.call();
+                  },
+                  Text(translations.finishButton),
+                ) ??
+                ElevatedButton(
+                  onPressed: () {
+                    onFinish?.call();
+                  },
+                  child: Text(translations.finishButton),
+                ),
+          )
         ],
       ],
     );

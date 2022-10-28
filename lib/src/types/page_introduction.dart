@@ -325,8 +325,8 @@ class IntroductionButtons extends StatelessWidget {
         if (options.buttonMode == IntroductionScreenButtonMode.text) ...[
           if (previous && showPreviousButton) ...[
             options.buttonBuilder?.call(
-                  IntroductionButton.previous,
                   context,
+                  IntroductionButton.previous,
                   _previous,
                   Text(translations.previousButton),
                 ) ??
@@ -338,8 +338,8 @@ class IntroductionButtons extends StatelessWidget {
             const SizedBox.shrink(),
           if (next && showNextButton) ...[
             options.buttonBuilder?.call(
-                  IntroductionButton.next,
                   context,
+                  IntroductionButton.next,
                   _next,
                   Text(translations.nextButton),
                 ) ??
@@ -354,8 +354,8 @@ class IntroductionButtons extends StatelessWidget {
                   ? 1
                   : 0,
               child: options.buttonBuilder?.call(
-                    IntroductionButton.finish,
                     context,
+                    IntroductionButton.finish,
                     () {
                       onFinish?.call();
                     },
@@ -383,6 +383,7 @@ class IntroductionButtons extends StatelessWidget {
               child: Align(
                 child: options.buttonBuilder?.call(
                       context,
+                      IntroductionButton.finish,
                       () {
                         onFinish?.call();
                       },
@@ -401,8 +402,8 @@ class IntroductionButtons extends StatelessWidget {
         ],
         if (showSkipButton && options.skippable && !last) ...[
           options.buttonBuilder?.call(
-                IntroductionButton.skip,
                 context,
+                IntroductionButton.skip,
                 () {
                   onFinish?.call();
                 },

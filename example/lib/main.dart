@@ -49,8 +49,8 @@ class MyApp extends StatelessWidget {
           ],
           introductionTranslations: const IntroductionTranslations(
             skipButton: 'Skip it!',
-            nextButton: 'Previous',
-            previousButton: 'Next',
+            nextButton: 'Next',
+            previousButton: 'Previous',
             finishButton: 'To the app!',
           ),
           tapEnabled: true,

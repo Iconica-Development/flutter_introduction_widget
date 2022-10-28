@@ -10,8 +10,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  decorated_icon: ^1.2.0
-  rive: ^0.7.28
 
 dev_dependencies:
   flutter_test:

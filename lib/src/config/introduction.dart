@@ -105,8 +105,8 @@ class IntroductionOptions {
   /// A builder that can be used to replace the default text buttons when
   /// [IntroductionScreenButtonMode.text] is provided to [buttonMode]
   final Widget Function(
-    IntroductionButton,
     BuildContext,
+    IntroductionButton,
     VoidCallback,
     Widget,
   )? buttonBuilder;

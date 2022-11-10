@@ -18,15 +18,7 @@ enum IndicatorMode { dot, dash, custom }
 
 enum IntroductionDisplayMode {
   singleScrollablePageVertical,
-  multiPageHorizontal,
-  multiPageHorizontal1,
-}
-
-enum IntroductionButton {
-  next,
-  previous,
-  skip,
-  finish,
+  multiPageHorizontal
 }
 
 class IntroductionPage {
@@ -108,12 +100,7 @@ class IntroductionOptions {
 
   /// A builder that can be used to replace the default text buttons when
   /// [IntroductionScreenButtonMode.text] is provided to [buttonMode]
-  final Widget Function(
-    IntroductionButton,
-    BuildContext,
-    VoidCallback,
-    Widget,
-  )? buttonBuilder;
+  final Widget Function(BuildContext, VoidCallback, Widget)? buttonBuilder;
 
   /// The translations for all buttons on the introductionpages
   ///

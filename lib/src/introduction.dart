@@ -51,7 +51,6 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
         builder: (context) {
           switch (widget.options.displayMode) {
             case IntroductionDisplayMode.multiPageHorizontal:
-            case IntroductionDisplayMode.multiPageHorizontal1:
               return MultiPageIntroductionScreen(
                 onComplete: widget.onComplete,
                 physics: widget.physics,

@@ -30,16 +30,15 @@ IntroductionScreen(
                 title: const Text('Third page'),
                 text: const Text('The final page of this app'),
                 graphic: const FlutterLogo(),
-                backgroundImage: const NetworkImage(
-                    'https://iconica.nl/wp-content/uploads/2021/12/20210928-_CS17127-1-2048x1365.jpg',
-                ),
+                backgroundImage: const AssetImage(
+                  'assets/flutter_introduction_background.jpeg'),
             ),
         ],
         introductionTranslations: const IntroductionTranslations(
             skipButton: 'Skip it!',
-            nextButton: 'Previous',
-            previousButton: 'Next',
-            finishButton: 'To the app!',
+            nextButton: 'Next',
+            previousButton: 'Previous',
+            finishButton: 'Finish',
         ),
         buttonMode: IntroductionScreenButtonMode.text,
         buttonBuilder: (context, onPressed, child) =>

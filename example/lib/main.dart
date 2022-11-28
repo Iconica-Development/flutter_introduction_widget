@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Iconica
+//
+// SPDX-License-Identifier: BSD-3-Clause
+
 import 'package:flutter/material.dart';
 import 'package:flutter_introduction_widget/flutter_introduction_widget.dart';
 
@@ -29,36 +33,37 @@ class MyApp extends StatelessWidget {
         options: IntroductionOptions(
           pages: [
             IntroductionPage(
-              title: const Text('First page'),
-              text: const Text('Wow a page'),
-              graphic: const FlutterLogo(),
+              title: const Text('Basic Page'),
+              text: const Text(
+                  'A page with some text and a widget in the middle.'),
+              graphic: const FlutterLogo(size: 100),
             ),
             IntroductionPage(
-              title: const Text('Second page'),
-              text: const Text('Another page'),
-              graphic: const FlutterLogo(),
-            ),
+                title: const Text('Layout Shift'),
+                text: const Text(
+                    'You can change the layout of a page to mix things up.'),
+                graphic: const FlutterLogo(size: 100),
+                layoutStyle: IntroductionLayoutStyle.imageTop),
             IntroductionPage(
-              title: const Text('Third page'),
-              text: const Text('The final page of this app'),
-              graphic: const FlutterLogo(),
-              backgroundImage: const NetworkImage(
-                'https://iconica.nl/wp-content/uploads/2021/12/20210928-_CS17127-1-2048x1365.jpg',
-              ),
+              title: const Text('Background Image'),
+              text:
+                  const Text('Add an ImageProvider to add an background image'),
+              backgroundImage: const AssetImage(
+                  'assets/flutter_introduction_background.jpeg'),
             ),
           ],
           introductionTranslations: const IntroductionTranslations(
             skipButton: 'Skip it!',
             nextButton: 'Next',
             previousButton: 'Previous',
-            finishButton: 'To the app!',
+            finishButton: 'Finish',
           ),
           tapEnabled: true,
           displayMode: IntroductionDisplayMode.multiPageHorizontal,
           buttonMode: IntroductionScreenButtonMode.text,
           indicatorMode: IndicatorMode.dash,
           skippable: true,
-          buttonBuilder: (introductionButton, context, onPressed, child) =>
+          buttonBuilder: (context, onPressed, child) =>
               ElevatedButton(onPressed: onPressed, child: child),
         ),
         onComplete: () {

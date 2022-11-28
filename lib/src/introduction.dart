@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Iconica
+//
+// SPDX-License-Identifier: BSD-3-Clause
+
 import 'package:flutter/material.dart';
 import 'package:flutter_introduction_widget/src/types/page_introduction.dart';
 import 'package:flutter_introduction_widget/src/types/single_introduction.dart';
@@ -47,7 +51,6 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
         builder: (context) {
           switch (widget.options.displayMode) {
             case IntroductionDisplayMode.multiPageHorizontal:
-            case IntroductionDisplayMode.multiPageHorizontal1:
               return MultiPageIntroductionScreen(
                 onComplete: widget.onComplete,
                 physics: widget.physics,

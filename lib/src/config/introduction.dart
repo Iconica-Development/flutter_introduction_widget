@@ -26,6 +26,7 @@ class IntroductionPage {
   final Widget? text;
   final Widget? graphic;
   final ImageProvider? backgroundImage;
+  final Decoration? decoration;
   final IntroductionLayoutStyle? layoutStyle;
 
   /// Creates an introduction page with data used in the introduction screen for
@@ -41,6 +42,7 @@ class IntroductionPage {
     this.text,
     this.graphic,
     this.backgroundImage,
+    this.decoration,
     this.layoutStyle,
   });
 }

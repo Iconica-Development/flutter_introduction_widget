@@ -40,6 +40,17 @@ class MyApp extends StatelessWidget {
             ),
             IntroductionPage(
                 title: const Text('Layout Shift'),
+                decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                  begin: Alignment.topRight,
+                  end: Alignment.bottomLeft,
+                  colors: [
+                    Colors.yellow,
+                    Colors.red,
+                    Colors.indigo,
+                    Colors.teal,
+                  ],
+                )),
                 text: const Text(
                     'You can change the layout of a page to mix things up.'),
                 graphic: const FlutterLogo(size: 100),

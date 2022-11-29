@@ -6,21 +6,30 @@ import 'package:flutter/material.dart';
 
 class Background extends StatelessWidget {
   const Background({
+    this.background,
     required this.child,
     this.backgroundImage,
     Key? key,
   }) : super(key: key);
 
+  final Decoration? background;
   final Widget child;
   final ImageProvider? backgroundImage;
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var background = this.background ??
+        BoxDecoration(
+          color: theme.backgroundColor,
+        );
+    var size = MediaQuery.of(context).size;
     var backgroundImage = this.backgroundImage;
     if (backgroundImage != null) {
-      return Material(
-        color: theme.backgroundColor,
+      return Container(
+        width: size.width,
+        height: size.height,
+        decoration: background,
         child: DecoratedBox(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -32,10 +41,11 @@ class Background extends StatelessWidget {
         ),
       );
     } else {
-      return Material(
-        color: theme.backgroundColor,
-        child: child,
-      );
+      return Container(
+          width: size.width,
+          height: size.height,
+          decoration: background,
+          child: child);
     }
   }
 }

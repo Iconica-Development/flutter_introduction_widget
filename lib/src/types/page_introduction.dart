@@ -305,6 +305,7 @@ class IntroductionButtons extends StatelessWidget {
           if (previous) ...[
             options.buttonBuilder?.call(
                   context,
+                  IntroductionButton.previous,
                   _previous,
                   Text(translations.previousButton),
                 ) ??
@@ -317,6 +318,7 @@ class IntroductionButtons extends StatelessWidget {
           if (next) ...[
             options.buttonBuilder?.call(
                   context,
+                  IntroductionButton.next,
                   _next,
                   Text(translations.nextButton),
                 ) ??
@@ -353,6 +355,7 @@ class IntroductionButtons extends StatelessWidget {
               child: Align(
                 child: options.buttonBuilder?.call(
                       context,
+                      IntroductionButton.finish,
                       () {
                         onFinish?.call();
                       },

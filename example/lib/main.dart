@@ -81,10 +81,15 @@ class MyApp extends StatelessWidget {
                 'Background Image',
               ),
               text: const Text(
-                'Add an ImageProvider to add an background image',
+                'Add a Decoration with a DecorationImage, to add an background image',
               ),
-              backgroundImage: const AssetImage(
-                'assets/flutter_introduction_background.jpeg',
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage(
+                    'assets/flutter_introduction_background.jpeg',
+                  ),
+                ),
               ),
             ),
           ],

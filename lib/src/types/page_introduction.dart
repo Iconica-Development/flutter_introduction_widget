@@ -215,7 +215,6 @@ class ExplainerPage extends StatelessWidget {
     var theme = Theme.of(context);
     return Background(
       background: page.decoration,
-      backgroundImage: page.backgroundImage,
       child: SafeArea(
         child: Column(
           children: [

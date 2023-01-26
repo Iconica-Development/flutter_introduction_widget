@@ -1,3 +1,7 @@
+##[2.0.0] - 26 January 2023
+
+*  remove 'background' parameter. Now if you want to use a background image, you have to add it to the 'decoration' parameter with a 'BoxDecoration'
+
 ##[1.1.2] - 29 November 2022
 
 *  add custom background to introduction page

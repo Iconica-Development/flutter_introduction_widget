@@ -42,10 +42,11 @@ class Background extends StatelessWidget {
       );
     } else {
       return Container(
-          width: size.width,
-          height: size.height,
-          decoration: background,
-          child: child);
+        width: size.width,
+        height: size.height,
+        decoration: background,
+        child: child,
+      );
     }
   }
 }

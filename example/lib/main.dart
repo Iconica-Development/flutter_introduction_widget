@@ -35,13 +35,27 @@ class MyApp extends StatelessWidget {
             IntroductionPage(
               title: const Text('Basic Page'),
               text: const Text(
-                  'A page with some text and a widget in the middle.'),
+                'A page with some text and a widget in the middle.',
+              ),
               graphic: const FlutterLogo(size: 100),
             ),
             IntroductionPage(
-                title: const Text('Layout Shift'),
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
+              title: const Text('Layout Shift'),
+              text: const Text(
+                'You can change the layout of a page to mix things up.',
+              ),
+              graphic: const FlutterLogo(size: 100),
+              layoutStyle: IntroductionLayoutStyle.imageTop,
+            ),
+            IntroductionPage(
+              title: const Text(
+                'Decoration',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
                   begin: Alignment.topRight,
                   end: Alignment.bottomLeft,
                   colors: [
@@ -50,17 +64,28 @@ class MyApp extends StatelessWidget {
                     Colors.indigo,
                     Colors.teal,
                   ],
-                )),
-                text: const Text(
-                    'You can change the layout of a page to mix things up.'),
-                graphic: const FlutterLogo(size: 100),
-                layoutStyle: IntroductionLayoutStyle.imageTop),
+                ),
+              ),
+              text: const Text(
+                'Add a Decoration to make a custom background, like a LinearGradient',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              graphic: const FlutterLogo(
+                size: 100,
+              ),
+            ),
             IntroductionPage(
-              title: const Text('Background Image'),
-              text:
-                  const Text('Add an ImageProvider to add an background image'),
+              title: const Text(
+                'Background Image',
+              ),
+              text: const Text(
+                'Add an ImageProvider to add an background image',
+              ),
               backgroundImage: const AssetImage(
-                  'assets/flutter_introduction_background.jpeg'),
+                'assets/flutter_introduction_background.jpeg',
+              ),
             ),
           ],
           introductionTranslations: const IntroductionTranslations(

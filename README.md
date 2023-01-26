@@ -1,13 +1,16 @@
-[![pub package](https://img.shields.io/pub/v/flutter_introduction_widget.svg)](https://github.com/Iconica-Development) [![Build status](https://img.shields.io/github/workflow/status/Iconica-Development/flutter_introduction_widget/CI)](https://github.com/Iconica-Development/flutter_introduction_widget/actions/new) [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart) 
+[![pub package](https://img.shields.io/pub/v/[PACKAGE NAME ON PUB].svg)](https://github.com/Iconica-Development) [![Build status](URL TO REPO)](URL TO GITHUB ACTIONS) [![style: effective dart](https://img.shields.io/badge/style-effective_dart-40c4ff.svg)](https://github.com/tenhobi/effective_dart) 
 
 # Introduction Widget
 Flutter Introduction Widget for showing a list of introduction pages on a single scrollable page or horizontal pageview.
 
-![Introduction GIF](flutter_introduction_widget.gif)
+If nothing is provided a few default pages are shown with a simple description of the package.
 
-## Setup
 
-To use this package, add `flutter_introduction_widget` as a dependency in your pubspec.yaml file.
+Supports all Flutter platforms.
+
+## Usage
+
+To use this package, add `flutter_introduction_widget` as a [dependency in your pubspec.yaml file](https://flutter.dev/docs/development/platform-integration/platform-channels).
 
 ## How to use
 
@@ -30,15 +33,16 @@ IntroductionScreen(
                 title: const Text('Third page'),
                 text: const Text('The final page of this app'),
                 graphic: const FlutterLogo(),
-                backgroundImage: const AssetImage(
-                  'assets/flutter_introduction_background.jpeg'),
+                backgroundImage: const NetworkImage(
+                    'https://iconica.nl/wp-content/uploads/2021/12/20210928-_CS17127-1-2048x1365.jpg',
+                ),
             ),
         ],
         introductionTranslations: const IntroductionTranslations(
             skipButton: 'Skip it!',
-            nextButton: 'Next',
-            previousButton: 'Previous',
-            finishButton: 'Finish',
+            nextButton: 'Previous',
+            previousButton: 'Next',
+            finishButton: 'To the app!',
         ),
         buttonMode: IntroductionScreenButtonMode.text,
         buttonBuilder: (context, onPressed, child) =>
@@ -50,7 +54,7 @@ IntroductionScreen(
 ),
 ``` 
 
-See the [Example Code](example/lib/main.dart) for an example on how to use this package.
+See [Example Code](example/lib/main.dart) for more info.
 
 ## Issues
 
@@ -62,4 +66,4 @@ If you would like to contribute to the plugin (e.g. by improving the documentati
 
 ## Author
 
-This `flutter_introduction_widget` for Flutter is developed by [Iconica](https://iconica.nl). You can contact us at <support@iconica.nl>
+This flutter_introduction_widget for Flutter is developed by [Iconica](https://iconica.nl). You can contact us at <support@iconica.nl>

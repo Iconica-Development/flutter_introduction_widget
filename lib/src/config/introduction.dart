@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2022 Iconica
-//
-// SPDX-License-Identifier: BSD-3-Clause
-
 import 'package:flutter/material.dart';
 
 enum IntroductionScreenMode { showNever, showAlways, showOnce }
@@ -18,14 +14,22 @@ enum IndicatorMode { dot, dash, custom }
 
 enum IntroductionDisplayMode {
   singleScrollablePageVertical,
-  multiPageHorizontal
+  multiPageHorizontal,
+  multiPageHorizontal1,
+}
+
+enum IntroductionButton {
+  next,
+  previous,
+  skip,
+  finish,
 }
 
 class IntroductionPage {
   final Widget? title;
   final Widget? text;
   final Widget? graphic;
-  final BoxDecoration? decoration;
+  final ImageProvider? backgroundImage;
   final IntroductionLayoutStyle? layoutStyle;
 
   /// Creates an introduction page with data used in the introduction screen for
@@ -34,13 +38,13 @@ class IntroductionPage {
   /// The values for [title] and [text] are optional in this, but will use a
   /// default translation key when built.
   ///
-  /// The [decoration] is fully optional and if not provided will show the
-  /// [ThemeData.colorScheme.background] as default.
+  /// The [backgroundImage] is fully optional and if not provided will show the
+  /// [ThemeData.backgroundColor] as default.
   IntroductionPage({
     this.title,
     this.text,
     this.graphic,
-    this.decoration,
+    this.backgroundImage,
     this.layoutStyle,
   });
 }
@@ -100,7 +104,12 @@ class IntroductionOptions {
 
   /// A builder that can be used to replace the default text buttons when
   /// [IntroductionScreenButtonMode.text] is provided to [buttonMode]
-  final Widget Function(BuildContext, VoidCallback, Widget)? buttonBuilder;
+  final Widget Function(
+    IntroductionButton,
+    BuildContext,
+    VoidCallback,
+    Widget,
+  )? buttonBuilder;
 
   /// The translations for all buttons on the introductionpages
   ///

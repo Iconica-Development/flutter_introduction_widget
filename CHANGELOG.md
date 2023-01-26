@@ -1,6 +1,3 @@
-##[1.1.2] - 29 November 2022
-
-*  add custom background to introduction page
 ## [1.1.1] - 20 October 2022
 
 * fix single button mode position and size

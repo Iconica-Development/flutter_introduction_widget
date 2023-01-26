@@ -1,7 +1,3 @@
-// SPDX-FileCopyrightText: 2022 Iconica
-//
-// SPDX-License-Identifier: BSD-3-Clause
-
 import 'package:flutter/material.dart';
 import 'package:flutter_introduction_widget/flutter_introduction_widget.dart';
 
@@ -33,54 +29,36 @@ class MyApp extends StatelessWidget {
         options: IntroductionOptions(
           pages: [
             IntroductionPage(
-              title: const Text('Basic Page'),
-              text: const Text(
-                  'A page with some text and a widget in the middle.'),
-              graphic: const FlutterLogo(size: 100),
+              title: const Text('First page'),
+              text: const Text('Wow a page'),
+              graphic: const FlutterLogo(),
             ),
             IntroductionPage(
-              title: const Text('Layout Shift'),
-              decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                begin: Alignment.topRight,
-                end: Alignment.bottomLeft,
-                colors: [
-                  Colors.yellow,
-                  Colors.red,
-                  Colors.indigo,
-                  Colors.teal,
-                ],
-              )),
-              text: const Text(
-                  'You can change the layout of a page to mix things up. You can even aad a decoration for a custom background.'),
-              graphic: const FlutterLogo(size: 100),
-              layoutStyle: IntroductionLayoutStyle.imageTop,
+              title: const Text('Second page'),
+              text: const Text('Another page'),
+              graphic: const FlutterLogo(),
             ),
             IntroductionPage(
-              title: const Text('Background Image'),
-              text: const Text(
-                  'Add an DecorationImage to add an background image to your decoration'),
-              decoration: const BoxDecoration(
-                image: DecorationImage(
-                  fit: BoxFit.cover,
-                  image:
-                      AssetImage('assets/flutter_introduction_background.jpeg'),
-                ),
+              title: const Text('Third page'),
+              text: const Text('The final page of this app'),
+              graphic: const FlutterLogo(),
+              backgroundImage: const NetworkImage(
+                'https://iconica.nl/wp-content/uploads/2021/12/20210928-_CS17127-1-2048x1365.jpg',
               ),
             ),
           ],
           introductionTranslations: const IntroductionTranslations(
             skipButton: 'Skip it!',
-            nextButton: 'Next',
-            previousButton: 'Previous',
-            finishButton: 'Finish',
+            nextButton: 'Previous',
+            previousButton: 'Next',
+            finishButton: 'To the app!',
           ),
           tapEnabled: true,
           displayMode: IntroductionDisplayMode.multiPageHorizontal,
           buttonMode: IntroductionScreenButtonMode.text,
           indicatorMode: IndicatorMode.dash,
           skippable: true,
-          buttonBuilder: (context, onPressed, child) =>
+          buttonBuilder: (introductionButton, context, onPressed, child) =>
               ElevatedButton(onPressed: onPressed, child: child),
         ),
         onComplete: () {

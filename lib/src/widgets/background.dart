@@ -8,37 +8,27 @@ class Background extends StatelessWidget {
   const Background({
     this.background,
     required this.child,
-    this.backgroundImage,
     Key? key,
   }) : super(key: key);
 
-  final Decoration? background;
+  final BoxDecoration? background;
   final Widget child;
-  final ImageProvider? backgroundImage;
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var background = this.background ??
         BoxDecoration(
-          color: theme.backgroundColor,
+          color: theme.colorScheme.background,
         );
     var size = MediaQuery.of(context).size;
-    var backgroundImage = this.backgroundImage;
+    var backgroundImage = this.background?.image;
     if (backgroundImage != null) {
       return Container(
         width: size.width,
         height: size.height,
         decoration: background,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: backgroundImage,
-            ),
-          ),
-          child: child,
-        ),
+        child: child,
       );
     } else {
       return Container(

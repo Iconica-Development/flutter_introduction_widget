@@ -39,28 +39,34 @@ class MyApp extends StatelessWidget {
               graphic: const FlutterLogo(size: 100),
             ),
             IntroductionPage(
-                title: const Text('Layout Shift'),
-                decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                  begin: Alignment.topRight,
-                  end: Alignment.bottomLeft,
-                  colors: [
-                    Colors.yellow,
-                    Colors.red,
-                    Colors.indigo,
-                    Colors.teal,
-                  ],
-                )),
-                text: const Text(
-                    'You can change the layout of a page to mix things up.'),
-                graphic: const FlutterLogo(size: 100),
-                layoutStyle: IntroductionLayoutStyle.imageTop),
+              title: const Text('Layout Shift'),
+              decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                begin: Alignment.topRight,
+                end: Alignment.bottomLeft,
+                colors: [
+                  Colors.yellow,
+                  Colors.red,
+                  Colors.indigo,
+                  Colors.teal,
+                ],
+              )),
+              text: const Text(
+                  'You can change the layout of a page to mix things up. You can even aad a decoration for a custom background.'),
+              graphic: const FlutterLogo(size: 100),
+              layoutStyle: IntroductionLayoutStyle.imageTop,
+            ),
             IntroductionPage(
               title: const Text('Background Image'),
-              text:
-                  const Text('Add an ImageProvider to add an background image'),
-              backgroundImage: const AssetImage(
-                  'assets/flutter_introduction_background.jpeg'),
+              text: const Text(
+                  'Add an DecorationImage to add an background image to your decoration'),
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image:
+                      AssetImage('assets/flutter_introduction_background.jpeg'),
+                ),
+              ),
             ),
           ],
           introductionTranslations: const IntroductionTranslations(

@@ -25,8 +25,7 @@ class IntroductionPage {
   final Widget? title;
   final Widget? text;
   final Widget? graphic;
-  final ImageProvider? backgroundImage;
-  final Decoration? decoration;
+  final BoxDecoration? decoration;
   final IntroductionLayoutStyle? layoutStyle;
 
   /// Creates an introduction page with data used in the introduction screen for
@@ -35,13 +34,12 @@ class IntroductionPage {
   /// The values for [title] and [text] are optional in this, but will use a
   /// default translation key when built.
   ///
-  /// The [backgroundImage] is fully optional and if not provided will show the
-  /// [ThemeData.backgroundColor] as default.
+  /// The [decoration] is fully optional and if not provided will show the
+  /// [ThemeData.colorScheme.background] as default.
   IntroductionPage({
     this.title,
     this.text,
     this.graphic,
-    this.backgroundImage,
     this.decoration,
     this.layoutStyle,
   });

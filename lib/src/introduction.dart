@@ -47,6 +47,7 @@ class _IntroductionScreenState extends State<IntroductionScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Builder(
         builder: (context) {
           switch (widget.options.displayMode) {

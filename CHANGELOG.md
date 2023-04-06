@@ -1,3 +1,7 @@
+##[2.1.0] - 6 April 2023
+
+*  Made the Introscreen scaffold transparent so a custom background can be used.
+
 ##[2.0.0] - 26 January 2023
 
 *  remove 'background' parameter. Now if you want to use a background image, you have to add it to the 'decoration' parameter with a 'BoxDecoration'

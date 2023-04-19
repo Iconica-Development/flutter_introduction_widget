@@ -1,3 +1,8 @@
+##[2.2.0] - 18 April 2023
+
+* Bump `rive` to 0.10.0
+* Remove unused `decorated_icon` dependency
+
 ##[2.1.0] - 6 April 2023
 
 *  Made the Introscreen scaffold transparent so a custom background can be used.

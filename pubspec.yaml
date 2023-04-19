@@ -1,6 +1,6 @@
 name: flutter_introduction_widget
 description: Flutter Introduction Widget for showing a list of introduction pages on a single scrollable page or horizontal pageview
-version: 2.1.0
+version: 2.2.0
 homepage: https://github.com/Iconica-Development/flutter_introduction_widget
 
 environment:

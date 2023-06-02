@@ -37,3 +37,7 @@ example/windows/
 example/linux/
 example/.metadata
 example/pubspec.lock
+
+.flutter-plugins
+.flutter-plugins-dependencies
+.metadata

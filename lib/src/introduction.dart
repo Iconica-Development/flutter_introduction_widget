@@ -10,7 +10,7 @@ import 'config/introduction.dart';
 
 const kAnimationDuration = Duration(milliseconds: 300);
 
-class IntroductionScreen extends StatefulWidget {
+class IntroductionScreen extends StatelessWidget {
   const IntroductionScreen({
     Key? key,
     required this.options,
@@ -40,29 +40,24 @@ class IntroductionScreen extends StatefulWidget {
   final void Function(IntroductionPage)? onPrevious;
 
   @override
-  State<IntroductionScreen> createState() => _IntroductionScreenState();
-}
-
-class _IntroductionScreenState extends State<IntroductionScreen> {
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Builder(
         builder: (context) {
-          switch (widget.options.displayMode) {
+          switch (options.displayMode) {
             case IntroductionDisplayMode.multiPageHorizontal:
               return MultiPageIntroductionScreen(
-                onComplete: widget.onComplete,
-                physics: widget.physics,
-                onSkip: widget.onSkip,
-                onPrevious: widget.onPrevious,
-                onNext: widget.onNext,
-                options: widget.options,
+                onComplete: onComplete,
+                physics: physics,
+                onSkip: onSkip,
+                onPrevious: onPrevious,
+                onNext: onNext,
+                options: options,
               );
             case IntroductionDisplayMode.singleScrollablePageVertical:
               return SingleIntroductionPage(
-                options: widget.options,
+                options: options,
               );
           }
         },

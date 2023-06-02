@@ -51,9 +51,9 @@ class _MultiPageIntroductionScreenState
 
   @override
   void dispose() {
-    super.dispose();
     _controller.removeListener(_handleScroll);
     _controller.dispose();
+    super.dispose();
   }
 
   @override

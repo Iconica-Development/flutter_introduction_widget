@@ -1,3 +1,7 @@
+##[3.0.0] - 2 June 2023
+
+* Remove `rive` dependency
+
 ##[2.2.0] - 18 April 2023
 
 * Bump `rive` to 0.10.0

@@ -101,28 +101,34 @@ class _MultiPageIntroductionScreenState
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(right: 16.0),
-                child: SizedBox(
-                  height: 64,
-                  child: AnimatedBuilder(
-                    animation: _controller,
-                    builder: (context, _) {
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          if (widget.options.skippable && !_isLast(pages)) ...[
-                            TextButton(
-                              onPressed: widget.onComplete,
-                              child: Text(translations.skipButton),
-                            ),
+              if (widget.options.controlMode ==
+                  IntroductionControlMode.twoButton) ...[
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: SizedBox(
+                    height: 64,
+                    child: AnimatedBuilder(
+                      animation: _controller,
+                      builder: (context, _) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            if (widget.options.skippable &&
+                                !_isLast(pages)) ...[
+                              TextButton(
+                                onPressed: widget.onComplete,
+                                child: Text(translations.skipButton),
+                              ),
+                            ],
                           ],
-                        ],
-                      );
-                    },
+                        );
+                      },
+                    ),
                   ),
                 ),
-              ),
+              ] else ...[
+                const SizedBox.shrink()
+              ],
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Column(
@@ -141,20 +147,40 @@ class _MultiPageIntroductionScreenState
                       padding: const EdgeInsets.all(32),
                       child: AnimatedBuilder(
                         animation: _controller,
-                        builder: (context, _) => IntroductionButtons(
-                          controller: _controller,
-                          next: _isNext(pages),
-                          previous: _isPrevious,
-                          last: _isLast(pages),
-                          options: widget.options,
-                          onFinish: widget.onComplete,
-                          onNext: () {
-                            widget.onNext?.call(pages[_currentPage.value]);
-                          },
-                          onPrevious: () {
-                            widget.onNext?.call(pages[_currentPage.value]);
-                          },
-                        ),
+                        builder: (context, _) {
+                          if (widget.options.controlMode ==
+                              IntroductionControlMode.oneButton) {
+                            return IntroductionOneButton(
+                              controller: _controller,
+                              next: _isNext(pages),
+                              previous: _isPrevious,
+                              last: _isLast(pages),
+                              options: widget.options,
+                              onFinish: widget.onComplete,
+                              onNext: () {
+                                widget.onNext?.call(pages[_currentPage.value]);
+                              },
+                              onPrevious: () {
+                                widget.onNext?.call(pages[_currentPage.value]);
+                              },
+                            );
+                          }
+
+                          return IntroductionTwoButtons(
+                            controller: _controller,
+                            next: _isNext(pages),
+                            previous: _isPrevious,
+                            last: _isLast(pages),
+                            options: widget.options,
+                            onFinish: widget.onComplete,
+                            onNext: () {
+                              widget.onNext?.call(pages[_currentPage.value]);
+                            },
+                            onPrevious: () {
+                              widget.onNext?.call(pages[_currentPage.value]);
+                            },
+                          );
+                        },
                       ),
                     ),
                   ],
@@ -261,8 +287,8 @@ class ExplainerPage extends StatelessWidget {
   }
 }
 
-class IntroductionButtons extends StatelessWidget {
-  const IntroductionButtons({
+class IntroductionTwoButtons extends StatelessWidget {
+  const IntroductionTwoButtons({
     required this.options,
     required this.controller,
     required this.next,
@@ -306,6 +332,7 @@ class IntroductionButtons extends StatelessWidget {
                   context,
                   _previous,
                   Text(translations.previousButton),
+                  IntroductionButtonType.previous,
                 ) ??
                 TextButton(
                   onPressed: _previous,
@@ -318,6 +345,7 @@ class IntroductionButtons extends StatelessWidget {
                   context,
                   _next,
                   Text(translations.nextButton),
+                  IntroductionButtonType.next,
                 ) ??
                 TextButton(
                   onPressed: _next,
@@ -330,6 +358,7 @@ class IntroductionButtons extends StatelessWidget {
                     onFinish?.call();
                   },
                   Text(translations.finishButton),
+                  IntroductionButtonType.finish,
                 ) ??
                 TextButton(
                   onPressed: () {
@@ -356,6 +385,7 @@ class IntroductionButtons extends StatelessWidget {
                         onFinish?.call();
                       },
                       Text(translations.finishButton),
+                      IntroductionButtonType.finish,
                     ) ??
                     ElevatedButton(
                       onPressed: () {
@@ -367,6 +397,112 @@ class IntroductionButtons extends StatelessWidget {
             ),
           ),
           const SizedBox.shrink(),
+        ],
+      ],
+    );
+  }
+
+  _next() {
+    controller.nextPage(
+      duration: kAnimationDuration,
+      curve: Curves.easeInOut,
+    );
+    onNext?.call();
+  }
+}
+
+class IntroductionOneButton extends StatelessWidget {
+  const IntroductionOneButton({
+    required this.options,
+    required this.controller,
+    required this.next,
+    required this.last,
+    required this.previous,
+    required this.onFinish,
+    required this.onNext,
+    required this.onPrevious,
+    Key? key,
+  }) : super(key: key);
+
+  final IntroductionOptions options;
+  final PageController controller;
+  final VoidCallback? onFinish;
+  final VoidCallback? onNext;
+  final VoidCallback? onPrevious;
+
+  final bool previous;
+  final bool next;
+  final bool last;
+
+  void _previous() {
+    controller.previousPage(
+      duration: kAnimationDuration,
+      curve: Curves.easeInOut,
+    );
+    onPrevious?.call();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    var translations = options.introductionTranslations;
+
+    return Column(
+      children: [
+        if (options.buttonMode == IntroductionScreenButtonMode.text) ...[
+          if (last) ...[
+            options.buttonBuilder?.call(
+                  context,
+                  () {
+                    onFinish?.call();
+                  },
+                  Text(translations.finishButton),
+                  IntroductionButtonType.finish,
+                ) ??
+                TextButton(
+                  onPressed: () {
+                    onFinish?.call();
+                  },
+                  child: Text(translations.finishButton),
+                ),
+          ] else ...[
+            options.buttonBuilder?.call(
+                  context,
+                  _next,
+                  Text(translations.nextButton),
+                  IntroductionButtonType.next,
+                ) ??
+                TextButton(
+                  onPressed: _next,
+                  child: Text(translations.nextButton),
+                ),
+          ],
+          if (previous) ...[
+            options.buttonBuilder?.call(
+                  context,
+                  _previous,
+                  Text(translations.previousButton),
+                  IntroductionButtonType.previous,
+                ) ??
+                TextButton(
+                  onPressed: _previous,
+                  child: Text(translations.previousButton),
+                ),
+          ] else ...[
+            options.buttonBuilder?.call(
+                  context,
+                  () {
+                    onFinish?.call();
+                  },
+                  Text(translations.finishButton),
+                  IntroductionButtonType.skip,
+                ) ??
+                TextButton(
+                  onPressed: () {
+                    onFinish?.call();
+                  },
+                  child: Text(translations.finishButton),
+                ),
+          ],
         ],
       ],
     );

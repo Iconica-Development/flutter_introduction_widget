@@ -21,6 +21,18 @@ enum IntroductionDisplayMode {
   multiPageHorizontal
 }
 
+enum IntroductionControlMode {
+  twoButton,
+  oneButton,
+}
+
+enum IntroductionButtonType {
+  next,
+  previous,
+  finish,
+  skip,
+}
+
 class IntroductionPage {
   final Widget? title;
   final Widget? text;
@@ -98,9 +110,17 @@ class IntroductionOptions {
   ///
   final IntroductionDisplayMode displayMode;
 
+  /// When [IntroductionDisplayMode.multiPageHorizontal] is selected multiple controlMode can be selected.
+  /// [IntroductionControlMode.twoButton] shows two buttons at the bottom of the screen to return or proceed. The skip button is placed at the top left of the screen.
+  /// [IntroductionControlMode.oneButton] contains one button at the bottom of the screen to proceed. Underneath is clickable text to skip if the current page is the first page. If the current page is any different it return to the previous screen.
+  ///
+  final IntroductionControlMode controlMode;
+
   /// A builder that can be used to replace the default text buttons when
   /// [IntroductionScreenButtonMode.text] is provided to [buttonMode]
-  final Widget Function(BuildContext, VoidCallback, Widget)? buttonBuilder;
+  final Widget Function(
+          BuildContext, VoidCallback, Widget, IntroductionButtonType)?
+      buttonBuilder;
 
   /// The translations for all buttons on the introductionpages
   ///
@@ -125,6 +145,7 @@ class IntroductionOptions {
     this.displayMode = IntroductionDisplayMode.multiPageHorizontal,
     this.skippable = false,
     this.buttonBuilder,
+    this.controlMode = IntroductionControlMode.twoButton,
   }) : assert(
           !(identical(indicatorMode, IndicatorMode.custom) &&
               indicatorBuilder == null),

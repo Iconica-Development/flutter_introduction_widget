@@ -102,7 +102,7 @@ class _MultiPageIntroductionScreenState
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               if (widget.options.controlMode ==
-                  IntroductionControlMode.twoButton) ...[
+                  IntroductionControlMode.previousNextButton) ...[
                 Padding(
                   padding: const EdgeInsets.only(right: 16.0),
                   child: SizedBox(
@@ -149,7 +149,7 @@ class _MultiPageIntroductionScreenState
                         animation: _controller,
                         builder: (context, _) {
                           if (widget.options.controlMode ==
-                              IntroductionControlMode.oneButton) {
+                              IntroductionControlMode.singleButton) {
                             return IntroductionOneButton(
                               controller: _controller,
                               next: _isNext(pages),

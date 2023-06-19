@@ -1,3 +1,8 @@
+##[4.0.0] - 15 June 2023
+
+* Added different button layout for text buttons.
+* ButtonBuilder now provides an extra paramter with the button type.
+
 ##[3.0.0] - 2 June 2023
 
 * Remove `rive` dependency

@@ -1,3 +1,7 @@
+##[4.1.0] - 4 November 2023
+
+* Added copyWith method for IntroductionOptions
+
 ##[4.0.0] - 15 June 2023
 
 * Added different button layout for text buttons.

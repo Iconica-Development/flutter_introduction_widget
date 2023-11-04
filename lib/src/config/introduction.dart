@@ -152,6 +152,45 @@ class IntroductionOptions {
           'When indicator mode is set to custom, '
           'make sure to define indicatorBuilder',
         );
+
+  IntroductionOptions copyWith({
+    IntroductionScreenMode? mode,
+    List<IntroductionPage>? pages,
+    bool? tapEnabled,
+    IntroductionScreenButtonMode? buttonMode,
+    IntroductionLayoutStyle? layoutStyle,
+    IndicatorMode? indicatorMode,
+    Widget Function(
+      BuildContext,
+      PageController,
+      int,
+      int,
+    )? indicatorBuilder,
+    bool? skippable,
+    TextAlign? textAlign,
+    IntroductionDisplayMode? displayMode,
+    IntroductionControlMode? controlMode,
+    Widget Function(BuildContext, VoidCallback, Widget, IntroductionButtonType)?
+        buttonBuilder,
+    IntroductionTranslations? introductionTranslations,
+  }) {
+    return IntroductionOptions(
+      mode: mode ?? this.mode,
+      pages: pages ?? this.pages,
+      tapEnabled: tapEnabled ?? this.tapEnabled,
+      buttonMode: buttonMode ?? this.buttonMode,
+      layoutStyle: layoutStyle ?? this.layoutStyle,
+      indicatorMode: indicatorMode ?? this.indicatorMode,
+      indicatorBuilder: indicatorBuilder ?? this.indicatorBuilder,
+      skippable: skippable ?? this.skippable,
+      textAlign: textAlign ?? this.textAlign,
+      displayMode: displayMode ?? this.displayMode,
+      controlMode: controlMode ?? this.controlMode,
+      buttonBuilder: buttonBuilder ?? this.buttonBuilder,
+      introductionTranslations:
+          introductionTranslations ?? this.introductionTranslations,
+    );
+  }
 }
 
 ///
